@@ -74,13 +74,13 @@ const userSchema = new mongoose.Schema({
     timestamps: true
 })
 
-const passwordSchema = new mongoose.Schema({
-    userId: {type: ObjectId, ref: 'User', required: true},
-    email: {type: String, required: true, trim: true, lowercase: true},
-    password: {type: String, required: true}
-})
+// const passwordSchema = new mongoose.Schema({
+//     userId: {type: ObjectId, ref: 'User', required: true},
+//     email: {type: String, required: true, trim: true, lowercase: true},
+//     password: {type: String, required: true}
+// })
 
 const userModel = mongoose.model('User', userSchema)//users
-const passwordModel = mongoose.model('Password', passwordSchema)//passwords
+// const passwordModel = mongoose.model('Password', passwordSchema)//passwords
 
-module.exports = {userModel, passwordModel}
+module.exports = {userModel}

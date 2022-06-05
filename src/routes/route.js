@@ -27,11 +27,11 @@ router.get('/users/:userId/cart', authentication, getCart)
 router.delete('/users/:userId/cart', authentication, deleteCart)
 
 // 4. Order
-router.post('/users/:userId/orders',authentication, createOrder)
+router.post('/users/:userId/orders', authentication, createOrder)
 router.put('/users/:userId/orders', authentication, updateOrder)
 
 
-/*------------------------------------------if api is invalid OR wrong URL----------------------------------------------------------*/
+/*-----------------------------------if api is invalid OR wrong URL------------------------------------------*/
 
 router.all("/**", function (req, res) {
     res.status(404).send({ status: false, msg: "The api you request is not available" })

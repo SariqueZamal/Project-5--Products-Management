@@ -1,16 +1,16 @@
 const { uploadFile } = require('../utils/aws')
 const bcrypt = require('bcrypt');
-const {userModel, passwordModel} = require('../models/userModel')
+const {userModel} = require('../models/userModel')
 const jwt = require("jsonwebtoken")
 
 const { isValid, isValidRequestBody, isValidObjectId, isValidName, isValidPincode, isValidEmail, isValidPhoneNumber, isValidPassword, checkImage } = require("../utils/validator")
 
 
-//*************************************************< User Registration >*****************************************************//
+//*****************************************< User Registration >*********************************************//
 
 const createUser = async function (req, res) {
     try {
-        let tempPass = req.body.password
+        // let tempPass = req.body.password
         let data = JSON.parse(JSON.stringify(req.body));
         let files = req.files
     
@@ -102,8 +102,8 @@ const createUser = async function (req, res) {
 
         let result = { fname, lname, email, profileImage: profileImage, phone, password: password, address };
 
-        const newUser = await userModel.create(result).select
-        await passwordModel.create({userId: newUser._id, email: newUser.email, password: tempPass})
+        const newUser = await userModel.create(result)
+        // await passwordModel.create({userId: newUser._id, email: newUser.email, password: tempPass})
         res.status(201).send({ status: true, msg: 'USER SUCCESSFULLY CREATED.', data: newUser })
     
     }
@@ -112,7 +112,7 @@ const createUser = async function (req, res) {
     }
 }
 
-//******************************************************< User Login >******************************************************//
+//*******************************************< User Login >*************************************************//
 
 const loginUser = async function (req, res) {
     try {
@@ -165,7 +165,7 @@ const loginUser = async function (req, res) {
     }
 }
 
-//******************************************************< Get User Details **************************************************//
+//******************************************< Get User Details >*********************************************//
 
 const profileDetails = async function (req, res) {
     try {
@@ -189,14 +189,14 @@ const profileDetails = async function (req, res) {
     }
 }
 
-//****************************************************< Update User Details ************************************************//
+//****************************************< Update User Details >********************************************//
 
 const updateUser = async function (req, res) {
     try {
         const userId = req.params.userId
         const data = req.body
         const files = req.files
-        let tempPass = req.body.password
+        // let tempPass = req.body.password
 
         if (!isValidObjectId(userId)) {
             return res.status(400).send({ status: false, msg: "Please enter a valid userId" })
@@ -306,7 +306,7 @@ const updateUser = async function (req, res) {
         }
 
         await checkUser.save();
-        await passwordModel.findOneAndUpdate({userId: checkUser._id}, {email: checkUser.email, password: tempPass})
+        // await passwordModel.findOneAndUpdate({userId: checkUser._id}, {email: checkUser.email, password: tempPass})
         return res.status(200).send({ status: true, message: "User Profile updated", data: checkUser })
 
     }
